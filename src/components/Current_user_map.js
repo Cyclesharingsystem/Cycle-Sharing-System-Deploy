@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
+import { Map, GoogleApiWrapper, Marker } from '@peacechen/google-maps-react';
 import axios from "axios";
 
 const Current_user_map = ({ google, rideId }) => {
