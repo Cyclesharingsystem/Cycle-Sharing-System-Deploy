@@ -1,10 +1,76 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Report.css";
-import { Bar, Line } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
-import revenueData from "../data/revenueDatareport.json";
+import { Line } from "react-chartjs-2";
+import axios from "axios";
 
 function Report1() {
+  const [todayDate, setTodayDate] = useState("");
+  const [currentMonth, setCurrentMonth] = useState("");
+  const [totalIncome, setTotalIncome] = useState(0); // State for total income
+  const [monthlyIncome, setMonthlyIncome] = useState(0); // State for monthly income
+  const [dailyRevenueData, setDailyRevenueData] = useState([]); // State for daily revenue data
+
+  useEffect(() => {
+    const currentDate = new Date();
+    setTodayDate(getFormattedDate(currentDate));
+    setCurrentMonth(getCurrentMonthName(currentDate));
+    loadTotalIncome();
+    loadMonthlyIncome(currentDate.getFullYear(), currentDate.getMonth() + 1);
+    loadDailyRevenueData(currentDate); // load daily revenue data for the current month
+  }, []);
+
+  const getFormattedDate = (date) => {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  const getCurrentMonthName = (date) => {
+    const options = { month: "long" };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  const loadTotalIncome = async () => {
+    try {
+      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+      const response = await axios.get(`http://localhost:8095/api/v1/userpayment/total?date=${today}`);
+      setTotalIncome(response.data.totalEstimatedAmount);
+    } catch (error) {
+      console.error("Error loading total income:", error);
+    }
+  };
+
+  const loadMonthlyIncome = async (year, month) => {
+    try {
+      const response = await axios.get(`http://localhost:8095/api/v1/userpayment/monthlySum?year=${year}&month=${month}`);
+      setMonthlyIncome(response.data);
+    } catch (error) {
+      console.error("Error loading monthly income:", error);
+    }
+  };
+
+  const loadDailyRevenueData = async (currentDate) => {
+    try {
+      const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+      const promises = [];
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        promises.push(axios.get(`http://localhost:8095/api/v1/userpayment/dailySum?date=${date}`));
+      }
+
+      const responses = await Promise.all(promises);
+      const dailyData = responses.map((response, index) => ({
+        label: (index + 1).toString(),
+        revenue: response.data,
+        cost: response.data * 0.5 // assuming cost is 50% of revenue, replace this with your actual calculation
+      }));
+
+      setDailyRevenueData(dailyData);
+    } catch (error) {
+      console.error("Error loading daily revenue data:", error);
+    }
+  };
+
   return (
     <div style={{ width: "100%" }} className="column">
       <div className="Dashboard">
@@ -29,12 +95,12 @@ function Report1() {
                     className="text"
                     style={{ marginLeft: "100px", fontSize: "14px" }}
                   >
-                    13 Today
+                    {todayDate}
                   </p>
                 </div>
 
-                <p className="numberuser1" style={{ marginTop: "21px" }}>
-                  25 000
+                <p className="numberuser1" style={{ marginTop: "0px" }}>
+                  {totalIncome.toLocaleString()} {/* Display the total income */}
                 </p>
               </div>
             </div>
@@ -49,15 +115,15 @@ function Report1() {
                     className="text"
                     style={{ marginLeft: "100px", fontSize: "14px" }}
                   >
-                    December
+                    {currentMonth}
                   </p>
                 </div>
 
                 <p
                   className="numberuser1"
-                  style={{ marginTop: "-22px", marginLeft: "100px" }}
+                  style={{ marginTop: "0px", marginLeft: "100px" }}
                 >
-                  250 000
+                  {monthlyIncome.toLocaleString()} {/* Display the monthly income */}
                 </p>
               </div>
             </div>
@@ -72,7 +138,7 @@ function Report1() {
                     className="text"
                     style={{ marginLeft: "100px", fontSize: "14px" }}
                   >
-                    13 Today
+                    {todayDate}
                   </p>
                 </div>
 
@@ -90,7 +156,7 @@ function Report1() {
                     className="text"
                     style={{ marginLeft: "100px", fontSize: "14px" }}
                   >
-                    13 Today
+                    {todayDate}
                   </p>
                 </div>
 
@@ -150,17 +216,17 @@ function Report1() {
             <div style={{ width: "90%", height: "450px", marginLeft: "70px" }}>
               <Line
                 data={{
-                  labels: revenueData.map((data) => data.label),
+                  labels: dailyRevenueData.map((data) => data.label),
                   datasets: [
                     {
                       label: "Revenue",
-                      data: revenueData.map((data) => data.revenue),
+                      data: dailyRevenueData.map((data) => data.revenue),
                       backgroundColor: "#63DF08",
                       borderColor: "#63DF08",
                     },
                     {
                       label: "Cost",
-                      data: revenueData.map((data) => data.cost),
+                      data: dailyRevenueData.map((data) => data.cost),
                       backgroundColor: "#9B08DF",
                       borderColor: "#9B08DF",
                     },
@@ -170,14 +236,14 @@ function Report1() {
                   scales: {
                     x: {
                       type: "category",
-                      labels: revenueData.map((data) => data.label),
+                      labels: dailyRevenueData.map((data) => data.label),
                     },
                     y: {
                       beginAtZero: true,
                     },
                   },
                   plugins: {
-                    title: { display: true, text: "Monthly Revenue & Cost" },
+                    title: { display: true, text: "Daily Revenue & Cost" },
                   },
                 }}
               />
