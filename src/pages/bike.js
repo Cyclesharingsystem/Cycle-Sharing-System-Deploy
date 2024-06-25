@@ -84,7 +84,7 @@ function Bike() {
 
   const AllRidebikes = async () => {
     try {
-      const result = await axios.get("http://localhost:8080/ride/totalRide");
+      const result = await axios.get("http://localhost:8095/api/v1/ride/total");
       setAllRides(result.data);
     } catch (error) {
       console.error("Error fetching all ride bikes:", error);

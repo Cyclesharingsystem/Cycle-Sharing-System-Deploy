@@ -1,29 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
+import axios from "axios";
 
-const Current_user_map = (props) => {
+const Current_user_map = ({ google, rideId }) => {
+  const [rideLocation, setRideLocation] = useState(null);
+
+  const fetchCurrentLocation = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8095/api/v1/ride/${rideId}/currentLocation`);
+      setRideLocation(response.data);
+    } catch (error) {
+      console.error("Error fetching current location:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (rideId) {
+      fetchCurrentLocation();
+    }
+  }, [rideId]);
+
   return (
     <div>
       <Map
-        google={props.google}
+        google={google}
         style={{ width: "35.7%", height: "55%" }}
         zoom={15}
         initialCenter={{
-          lat: 6.047170,
-          lng: 80.210091,
+          lat: rideLocation ? rideLocation.latitude : 6.047170, // Fallback value
+          lng: rideLocation ? rideLocation.longitude : 80.210091 // Fallback value
+        }}
+        center={{
+          lat: rideLocation ? rideLocation.latitude : 6.047170, // Update center dynamically
+          lng: rideLocation ? rideLocation.longitude : 80.210091 // Update center dynamically
         }}
       >
-        {/* Marker for the first point */}
-        {/* <Marker position={{ lat: 6.053519, lng: 80.220978 }} /> */}
-
-        {/* Marker for the second point */}
-        <Marker position={{ lat: 6.034010, lng: 80.218852 }} />
-
-        {/* Marker for the second point */}
-        <Marker position={{ lat: 6.043047, lng: 80.197158 }} />
-
-        {/* Marker for the second point */}
-        <Marker position={{ lat: 6.049653, lng: 80.203943 }} />
+        {rideLocation && (
+          <Marker
+            position={{ lat: rideLocation.latitude, lng: rideLocation.longitude }}
+            title={`Current Location: Latitude: ${rideLocation.latitude}, Longitude: ${rideLocation.longitude}, Timestamp: ${rideLocation.timestamp}`}
+          />
+        )}
       </Map>
     </div>
   );

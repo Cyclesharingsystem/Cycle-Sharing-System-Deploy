@@ -55,7 +55,7 @@ function User() {
   };
 
   const loadAllRideBikes = async () => {
-    const result = await axios.get("http://localhost:8080/ride/totalRide");
+    const result = await axios.get("http://localhost:8095/api/v1/ride/total");
     setAllRides(result.data);
   };
 
