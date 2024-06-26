@@ -1,8 +1,6 @@
-.nav_main{
+.nav_main {
   position: relative;
   z-index: 10000;
-  
-
 }
 
 /* .circle_logo {
@@ -28,13 +26,8 @@
   border: 1px solid black; /* Set border color and width */
   background: red;
   margin-top: 120px;
-  margin-left: 50px;
   position: relative; /* Needed for positioning inner circle */
 }
-
-
-
-
 
 /* .logo_image {
   width: 70px; /* Adjust logo image size *
@@ -72,8 +65,32 @@
   transform: translate(-50%, -50%);
 }
 
-/* Add media queries for smaller screen sizes */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 2500px) {
+  .side-bar {
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: flex-start;
+  }
+  .circle_logo_profile {
+    margin-left: 30px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .bar-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    padding-block: 5px;
+  }
+  .home_adj {
+    display: none;
+  }
   .circle_logo {
     width: 50px;
     height: 50px;
@@ -84,6 +101,16 @@
     width: 50px;
     height: 50px;
   }
+  .app_name {
+    display: none;
+  }
+  .side-bar {
+    width: 70px;
+    align-items: center;
+  }
+}
+/* Add media queries for smaller screen sizes */
+@media only screen and (max-width: 768px) {
 }
 
 /* Add media queries for even smaller screen sizes, like mobile phones */
@@ -100,6 +127,16 @@
   }
 }
 
+@media only screen and (max-width: 350px) {
+  .bar-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
 
 .logo_image_profile {
   width: 47px; /* Adjust logo image size */
@@ -334,15 +371,13 @@
   font-size: 24px;
 }
 
-.dot{
+.dot {
   margin-top: 10px;
 }
 
 .Location {
   text-decoration: none; /* Remove underline */
 }
-
-
 
 .Location {
   border: none;

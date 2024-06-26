@@ -36,7 +36,7 @@ function Sidebar() {
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       {/* First column */}
-      <div style={{ width: "15%" }}>
+      <div className="side-bar">
         <div className="circle_logo">
           <img src={logo} alt="" className="logo_image" />
         </div>
@@ -49,7 +49,7 @@ function Sidebar() {
           </div>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/home"
             className="home_button"
@@ -61,7 +61,7 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/bike"
             className="home_button_spaceB"
@@ -73,7 +73,7 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/user"
             className="home_button_spaceU"
@@ -85,7 +85,7 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/payment"
             className="home_button_spaceP"
@@ -97,7 +97,7 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/reports"
             className="home_button_spaceR"
@@ -109,7 +109,7 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/notification"
             className="home_button_spaceN"
@@ -121,7 +121,7 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/fair_structure"
             className="home_button_spaceF"
@@ -133,7 +133,7 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/maintenance"
             className="home_button_spaceM"
@@ -145,7 +145,7 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div>
+        <div className="bar-button">
           <Link
             to="/chat"
             className="home_button_spaceC"
@@ -157,7 +157,14 @@ function Sidebar() {
           </Link>
         </div>
 
-        <div style={{ width: "20%", display: "flex", flexDirection: "row" }}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+          }}
+        >
           <div className="circle_logo_profile">
             <div className="inner_circle_profile"></div>
             <img src={profile} alt="" className="logo_image_profile" />
@@ -166,13 +173,10 @@ function Sidebar() {
             <text>Anantharam</text>
           </div>
         </div>
-        <div className="dot">
-          <text>.</text>
-        </div>
       </div>
 
       {/* Second column */}
-      <div style={{ width: "85%" }} className="column">
+      <div style={{ width: "auto" }} className="column">
         {/* Render content dynamically based on activeTab state */}
         {activeTab === "Home" && <Home />}
         {activeTab === "Bikes" && <Bike />}
