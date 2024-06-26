@@ -124,7 +124,7 @@ function User() {
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div className="current_User">User</div>
             <div
-              className="bike-Search_User"
+              className="bike-Search_Useruser"
               style={{
                 display: "flex",
                 flexDirection: "row",

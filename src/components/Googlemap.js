@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Map, GoogleApiWrapper, Marker } from "@peacechen/google-maps-react";
 import axios from "axios";
+import bicycleIcon from "../images/bicycle.png";
 
 const MapContainer = (props) => {
   const [ridePaths, setRidePaths] = useState([]);
@@ -50,6 +51,10 @@ const MapContainer = (props) => {
             key={index}
             position={{ lat: path.latitude, lng: path.longitude }}
             title={`Ride ID: ${path.rideId}, Timestamp: ${path.timestamp}`}
+            icon={{
+              url: bicycleIcon,
+              scaledSize: new window.google.maps.Size(40, 40), // Set the size of the image
+            }}
             // icon={cycleIcon}
           />
         ))}

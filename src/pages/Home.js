@@ -50,6 +50,8 @@ function Home() {
   const [userView, setUserView] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
+  
+
   const dataST1 = {
     datasets: [
       {
@@ -288,6 +290,15 @@ function Home() {
     }
   };
 
+  const loadCurrentUsers = async () => {
+    try {
+      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/inRide");
+      setTotalCurrentUsers(result.data.length);
+    } catch (error) {
+      console.error("Error loading users:", error);
+    }
+  };
+
   const handleClickBell = () => {
     // Define the behavior for bell icon click
     setBellClicked(true);
@@ -339,6 +350,7 @@ function Home() {
     AllBikesinMaintenance();
     AllRidebikes();
     loadCurrentRides();
+    loadCurrentUsers();
   }, []);
 
   return (
@@ -531,7 +543,7 @@ function Home() {
                 <div>
                   <div
                     className="StaionDetailsBoxuser"
-                    style={{ marginLeft: "70px" }}
+                    style={{ marginLeft: "70px", width: "300px"}}
                   >
                     <div style={{ display: "flex", flexDirection: "row" }}>
                       <p className="text">Total users</p>

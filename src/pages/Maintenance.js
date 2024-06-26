@@ -74,11 +74,11 @@ function Maintenance() {
             </div>
             <div className="StaionDetailsBoxuser">
               <p className="text">Repair completed</p>
-              <p className="numberuser">need to fill</p>
+              <p className="numberuser"></p>
             </div>
             <div className="StaionDetailsBoxuser">
               <p className="text">Bikes to be repaired</p>
-              <p className="numberuser">need to fill</p>
+              <p className="numberuser"></p>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@ function Maintenance() {
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div className="current_User">Maintenance</div>
             <div
-              className="bike-Search_User"
+              className="bike-Search_Useruser"
               style={{
                 display: "flex",
                 flexDirection: "row",

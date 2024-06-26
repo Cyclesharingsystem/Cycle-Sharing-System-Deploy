@@ -50,14 +50,14 @@ align-items: center;
    width: 100px;
    margin-top: 25px;
    right: 310px; /* Align to the left side of the parent container */
-   position: absolute; /* Position absolutely within the parent container */
+   /* Position absolutely within the parent container */
    display: flex;
    justify-content: center;
    align-items: center;
    color: white;
    font-weight: bold;
    border: none;
-   margin-right: 250px;
+   margin-left: 250px;
    margin-top: 40px;
  }
  .fcancelbikepagebutton{
@@ -70,7 +70,7 @@ align-items: center;
     width: 98px;
     margin-top: 25px;
     right: 310px; /* Align to the left side of the parent container */
-    position: absolute; /* Position absolutely within the parent container */
+    /* Position absolutely within the parent container */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,7 +78,7 @@ align-items: center;
     font-weight: bold;
     font-size: 13px;
     border: none;
-    margin-right: 450px;
+    margin-left: 10px;
     margin-top: 40px;
   }
  

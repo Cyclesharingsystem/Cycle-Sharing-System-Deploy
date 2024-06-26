@@ -44,17 +44,13 @@
   height: 40px;
   width: 120px;
   margin-top: 25px;
-  right: 310px; /* Align to the left side of the parent container */
-  position: absolute; /* Position absolutely within the parent container */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-right: 10px; /* Adjust margin as needed */
   color: white;
   font-weight: bold;
   border: none;
-  margin-right: 400px;
-  margin-top: 40px;
+  cursor: pointer; /* Ensure cursor changes on hover */
 }
+
 .cancelbikepagebutton {
   padding: 8px 12px;
   background-color: #009efd;
@@ -64,17 +60,12 @@
   height: 24px;
   width: 98px;
   margin-top: 25px;
-  right: 310px; /* Align to the left side of the parent container */
-  position: absolute; /* Position absolutely within the parent container */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-right: 10px; /* Adjust margin as needed */
   color: white;
   font-weight: bold;
   font-size: 13px;
   border: none;
-  margin-right: 600px;
-  margin-top: 40px;
+  cursor: pointer; /* Ensure cursor changes on hover */
 }
 
 .addbikepagebutton:hover {
@@ -84,6 +75,7 @@
 .cancelbikepagebutton:hover {
   background-color: rgb(229, 126, 82);
 }
+
 
 .QrWindow {
   background-color: rgba(0, 0, 0, 0.5);

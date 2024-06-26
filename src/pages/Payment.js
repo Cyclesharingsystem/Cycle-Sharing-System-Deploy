@@ -139,7 +139,7 @@ function Payment() {
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div className="current_User">Payment</div>
               <div
-                className="bike-Search_User"
+                className="bike-Search_Useruser"
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -154,7 +154,7 @@ function Payment() {
                   type="text"
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search"
-                  style={{ border: "none", outline: "none", width: "120px" }}
+                  style={{ border: "none", outline: "none", width: "60%" }}
                 />
               </div>
             </div>

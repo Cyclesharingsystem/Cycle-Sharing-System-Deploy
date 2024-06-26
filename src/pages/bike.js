@@ -10,22 +10,22 @@ import Bikes_view from "../components/Bikes_view";
 function Bike() {
   const [bikes, setBikes] = useState([]);
   const [search, setSearch] = useState("");
-  const [currentbikeClicked, setcurrentbikeClicked] = useState(true);
-  const [addbikeClicked, setaddbikeClicked] = useState(false);
+  const [currentbikeClicked, setCurrentbikeClicked] = useState(true);
+  const [addbikeClicked, setAddbikeClicked] = useState(false);
   const [totalBikes, setTotalBikes] = useState(0);
   const [todayDate, setTodayDate] = useState("");
-  const [totalOnRideUsers, settotalOnRideUsers] = useState([]);
-  const [bikesinStation, setBikesinStation] = useState([]);
+  const [totalOnRideUsers, setTotalOnRideUsers] = useState([]);
+  const [bikesInStation, setBikesInStation] = useState([]);
   const [allRides, setAllRides] = useState([]);
-  const [bikeView, setBikeView] = useState(false); // Correct initial state
+  const [bikeView, setBikeView] = useState(false);
   const [selectedBike, setSelectedBike] = useState(null);
 
   useEffect(() => {
     loadBikes();
     setTodayDate(getFormattedDate(new Date()));
     TotalOnRideUsersfun();
-    AllBikesinstations();
-    AllRidebikes();
+    AllBikesInStations();
+    AllRideBikes();
   }, []);
 
   // Function to format date as "DD MonthName YYYY"
@@ -36,9 +36,7 @@ function Bike() {
 
   const loadBikes = async () => {
     try {
-      // const result = await axios.get("http://localhost:8095/api/v1/Bikes");
       const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/Bikes");
-      console.log("Result data:", result.data);
       setTotalBikes(result.data.length);
       setBikes(result.data);
     } catch (error) {
@@ -61,29 +59,25 @@ function Bike() {
 
   const TotalOnRideUsersfun = async () => {
     try {
-      const result = await axios.get(
-        "https://backend-host-9thd.onrender.com/api/v1/user/totalonRideUsers"
-      );
-      settotalOnRideUsers(result.data);
+      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/totalonRideUsers");
+      setTotalOnRideUsers(result.data);
     } catch (error) {
       console.error("Error fetching total on-ride users:", error);
       alert("Failed to fetch total on-ride users. Please try again later.");
     }
   };
 
-  const AllBikesinstations = async () => {
+  const AllBikesInStations = async () => {
     try {
-      const result = await axios.get(
-        "https://backend-host-9thd.onrender.com/api/v1/station/total-available-bikes"
-      );
-      setBikesinStation(result.data);
+      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/station/total-available-bikes");
+      setBikesInStation(result.data);
     } catch (error) {
       console.error("Error fetching bikes in stations:", error);
       alert("Failed to fetch bikes in stations. Please try again later.");
     }
   };
 
-  const AllRidebikes = async () => {
+  const AllRideBikes = async () => {
     try {
       const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/ride/total");
       setAllRides(result.data);
@@ -105,27 +99,20 @@ function Bike() {
       <div>
         <div style={{ marginTop: "20px" }}>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <div
-              className="StaionDetailsBoxuser"
-              style={{ marginLeft: "70px" }}
-            >
+            <div className="StaionDetailsBoxuser" style={{ marginLeft: "70px" }}>
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <p className="text">Total bikes</p>
-                  <p
-                    className="text"
-                    style={{ marginLeft: "100px", fontSize: "14px" }}
-                  >
+                  <p className="text" style={{ marginLeft: "100px", fontSize: "14px" }}>
                     {todayDate}
                   </p>
                 </div>
-
                 <p className="numberuser1">{totalBikes}</p>
               </div>
             </div>
             <div className="StaionDetailsBoxuser">
               <p className="text">Total bikes in stations</p>
-              <p className="numberuser">{bikesinStation}</p>
+              <p className="numberuser">{bikesInStation}</p>
             </div>
             <div className="StaionDetailsBoxuser">
               <p className="text">On-Ride bikes</p>
@@ -147,32 +134,22 @@ function Bike() {
               className="addbikebutton"
               to=""
               onClick={() => {
-                setcurrentbikeClicked(false);
-                setaddbikeClicked(true);
+                setCurrentbikeClicked(false);
+                setAddbikeClicked(true);
               }}
             >
               +Add bike
             </Link>
-
             <div
               className="bike-Search_User"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
+              style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
             >
               <FontAwesomeIcon icon={faSearch} style={{ marginRight: "5px" }} />
               <input
                 type="text"
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search"
-                style={{
-                  border: "none",
-                  outline: "none",
-                  width: "7vw",
-                  height: "2vh",
-                }}
+                style={{ border: "none", outline: "none", width: "7vw", height: "2vh" }}
               ></input>
             </div>
           </div>
@@ -197,12 +174,9 @@ function Bike() {
               <tbody className="table-group-divider">
                 {bikes
                   .filter((Bike) => {
-                    // Ensure the brand is defined and convert it to a string before searching
                     return search.toLowerCase() === ""
                       ? Bike
-                      : (Bike.brand ? Bike.brand.toLowerCase() : "").includes(
-                          search.toLowerCase()
-                        );
+                      : (Bike.brand ? Bike.brand.toLowerCase() : "").includes(search.toLowerCase());
                   })
                   .map((Bike, index) => (
                     <tr key={index}>
@@ -210,10 +184,7 @@ function Bike() {
                       <td>{Bike.bikeId}</td>
                       <td>
                         <div>
-                          <FontAwesomeIcon
-                            icon={faBicycle}
-                            style={{ marginRight: "5px" }}
-                          />
+                          <FontAwesomeIcon icon={faBicycle} style={{ marginRight: "5px" }} />
                         </div>
                       </td>
                       <td>{Bike.brand}</td>
@@ -239,15 +210,8 @@ function Bike() {
                             >
                               View
                             </button>
-                            <button className="action-button">
-                              View location
-                            </button>
-                            <button
-                              className="action-button"
-                              onClick={() => {
-                                deleteBikes(Bike.bikeId);
-                              }}
-                            >
+                            <button className="action-button">View location</button>
+                            <button className="action-button" onClick={() => deleteBikes(Bike.bikeId)}>
                               Delete
                             </button>
                           </div>
@@ -260,8 +224,8 @@ function Bike() {
             {bikeView && selectedBike && (
               <div className="QrWindow">
                 <Bikes_view
-                  handleQrWindowClose={() => setBikeView(false)} // Corrected to close the view
-                  selectedBike={selectedBike} // Corrected prop name
+                  handleQrWindowClose={() => setBikeView(false)}
+                  selectedBike={selectedBike}
                 />
               </div>
             )}
@@ -272,7 +236,13 @@ function Bike() {
       {addbikeClicked && (
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div>
-            <Addbike />
+            <Addbike
+              onSuccessAdd={() => {
+                setAddbikeClicked(false);
+                setCurrentbikeClicked(true);
+                loadBikes();
+              }}
+            />
           </div>
         </div>
       )}

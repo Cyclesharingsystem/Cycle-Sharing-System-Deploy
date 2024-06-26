@@ -39,12 +39,22 @@
   
   
   .paymet-table-body {
-    /* Styles for the table body */
+    /* Set overflow and max-height for scrollability */
+    overflow-y: auto;
+    max-height: 250px;
   }
   
   .paymet-table-row {
-    /* Styles for each row */
+    /* Add padding and adjust hover effect */
+    padding: 10px 0;
+    transition: background-color 0.3s ease;
+  
+    /* Hover effect */
   }
+  .paymet-table-row:hover {
+    background-color: #f0f0f0;
+  }
+  
   
   .paymet-table-cell {
     padding: 10px;
