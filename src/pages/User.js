@@ -15,7 +15,7 @@ function User() {
   const [allRides, setAllRides] = useState(0);
   const [totalCurrentUsers, setTotalCurrentUsers] = useState(0);
 
-  const [userView, setUserView] = useState(false); // Changed to boolean
+  const [userView, setUserView] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
@@ -28,18 +28,17 @@ function User() {
   }, []);
 
   const loadUsers = async () => {
-    // const result = await axios.get("http://localhost:8095/api/v1/user/all");
-    const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/all");
-
-    setUser(result.data);
-    console.log(result.data);
+    try {
+      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/all");
+      setUser(result.data);
+    } catch (error) {
+      console.error("Error loading users:", error);
+    }
   };
 
   const loadCurrentUsers = async () => {
     try {
       const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/inRide");
-      console.log("Result data:", result.data);
-      
       setTotalCurrentUsers(result.data.length);
     } catch (error) {
       console.error("Error loading users:", error);
@@ -47,18 +46,30 @@ function User() {
   };
 
   const loadTotalNewUsers = async () => {
-    const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/totalVerifiedUsers");
-    setTotalNewUsers(result.data);
+    try {
+      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/totalVerifiedUsers");
+      setTotalNewUsers(result.data);
+    } catch (error) {
+      console.error("Error loading total new users:", error);
+    }
   };
 
   const loadTotalOnRideUsers = async () => {
-    const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/totalonRideUsers");
-    setTotalOnRideUsers(result.data);
+    try {
+      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/user/totalonRideUsers");
+      setTotalOnRideUsers(result.data);
+    } catch (error) {
+      console.error("Error loading total on-ride users:", error);
+    }
   };
 
   const loadAllRideBikes = async () => {
-    const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/ride/total");
-    setAllRides(result.data);
+    try {
+      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/ride/total");
+      setAllRides(result.data);
+    } catch (error) {
+      console.error("Error loading all ride bikes:", error);
+    }
   };
 
   const getFormattedDate = (date) => {
@@ -74,7 +85,6 @@ function User() {
       .reverse()
       .join("-");
   };
-  
 
   return (
     <div style={{ width: "100%" }} className="column">
@@ -96,7 +106,7 @@ function User() {
                   {todayDate}
                 </p>
               </div>
-              <p className="numberuser1">{totalNewUsers}</p>
+              <p className="numberuser1">{user.length}</p>
             </div>
             <div className="StaionDetailsBoxuser">
               <p className="text">Total current users</p>
@@ -136,14 +146,13 @@ function User() {
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">Profile</th>
-                  <th scope="col">Name</th>
+                  <th scope="col">Firstname</th>
+                  <th scope="col">Lastname</th>
                   <th scope="col">Email</th>
                   <th scope="col">Mobile</th>
                   <th scope="col">Registed date</th>
                   <th scope="col">On ride?</th>
-                  <th scope="col">Last Ride history</th>
                   <th scope="col">Current location</th>
-                  <th scope="col">Wallet</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -162,20 +171,25 @@ function User() {
                       <td>
                         <div className="profile-circle"></div>
                       </td>
-                      <td>{User.firstName + " " + User.lastName}</td>
+                      <td>{User.firstName}</td>
+                      <td>{User.lastName}</td>
                       <td>{User.email}</td>
                       <td>{User.mobile}</td>
                       <td>{formatDate(User.registrationTime)}</td>
                       <td>{User.inRide ? "Yes" : "No"}</td>
-                      <td>History</td>
-                      <td>location</td>
-                      <td>500.00</td>
+                      <td>
+                        {/* Render location details */}
+                        {User.location 
+                          ? `${User.location.latitude}, ${User.location.longitude}` 
+                          : "N/A"
+                        }
+                      </td>
                       <td>
                         <div className="dropdown">
                           <button
                             onClick={() => {
                               setUserView(true);
-                              setSelectedUser(User); // Set the selected user
+                              setSelectedUser(User);
                             }}
                             className="dropbtn"
                           >
