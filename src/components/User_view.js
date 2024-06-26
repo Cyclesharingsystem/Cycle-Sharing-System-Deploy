@@ -52,9 +52,9 @@ function User_view({ handleQrWindowClose, selectedUser }) {
               <li className="user-detail">
                 <div>Mobile: {currentUserData.mobile}</div>
               </li>
-              <li className="user-detail">
+              {/* <li className="user-detail">
                 <div>Registered Time: {new Date(currentUserData.registrationTime).toLocaleString()}</div>
-              </li>
+              </li> */}
             </ul>
           ) : (
             <p>Loading user data...</p>

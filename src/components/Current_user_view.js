@@ -75,24 +75,24 @@ function Current_user_view({ handleQrWindowClose, selectedUser }) {
             <li className="user-detail">
               <div>Ride ID: {rideDetails.rideId}</div>
             </li>
-            <li className="user-detail">
+            {/* <li className="user-detail">
               <div>In Ride: {rideDetails.inRide ? "Yes" : "No"}</div>
-            </li>
+            </li> */}
             <li className="user-detail">
               <div>Start Time: {rideDetails.startTime}</div>
             </li>
-            <li className="user-detail">
+            {/* <li className="user-detail">
               <div>End Time: {rideDetails.endTime}</div>
             </li>
             <li className="user-detail">
               <div>Plans: {rideDetails.plans}</div>
-            </li>
-            <li className="user-detail">
+            </li> */}
+            {/* <li className="user-detail">
               <div>Estimated Amount: {rideDetails.estimatedAmount}</div>
             </li>
             <li className="user-detail">
               <div>Payment Date: {rideDetails.paymentDate}</div>
-            </li>
+            </li> */}
             <li className="user-detail">
               <div>Bike ID: {rideDetails.bikeId}</div>
             </li>

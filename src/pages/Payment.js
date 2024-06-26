@@ -1,14 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Payment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function Payment() {
   const [search, setSearch] = useState("");
   const [payments, setPayments] = useState([]); // State to hold user payments
   const [revenueData, setRevenueData] = useState([]); // State to hold monthly revenue data
+  const chartRef = useRef(null); // Ref for the chart instance
 
   useEffect(() => {
     fetchMonthlyRevenueData();
@@ -52,6 +74,15 @@ function Payment() {
     }
   };
 
+  // Cleanup chart on unmount
+  useEffect(() => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
+  }, []);
+
   return (
     <div>
       <div className="Dashboard">
@@ -70,6 +101,7 @@ function Payment() {
           style={{ display: "flex", flexDirection: "row" }}
         >
           <Line
+            ref={chartRef}
             data={{
               labels: revenueData.map((data) => data.label),
               datasets: [
@@ -150,8 +182,7 @@ function Payment() {
                       <tr key={payment.id}>
                         <td>{payment.id}</td>
                         <td>{payment.estimatedAmount}</td>
-                        <td>{payment.estimatedAmount / 2}</td>{" "}
-                        {/* Calculating daily cost as half of estimated amount */}
+                        <td>{payment.estimatedAmount / 2}</td> {/* Display half of the estimated amount */}
                         <td>{payment.paymentDate}</td>
                       </tr>
                     ))}
