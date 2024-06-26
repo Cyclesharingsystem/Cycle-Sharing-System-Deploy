@@ -15,8 +15,6 @@ import Current_user_view from "../components/Current_user_view";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Home() {
- 
-
   const [bellClicked, setBellClicked] = useState(false);
   const [locationClicked, setLocationClicked] = useState(true);
   const [userClicked, setUserClicked] = useState(false);
@@ -106,7 +104,9 @@ function Home() {
   };
   const loadBikes = async () => {
     try {
-      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/Bikes");
+      const result = await axios.get(
+        "https://backend-host-9thd.onrender.com/api/v1/Bikes"
+      );
       setTotalBikes(result.data.length);
       setBikes(result.data);
     } catch (error) {
@@ -143,16 +143,18 @@ function Home() {
   //   }
   // };
 
-    // Updated API call to load rides instead of users
-    const loadCurrentRides = async () => {
-      try {
-        const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/ride/onRide");
-        setCurrentRides(result.data);
-        setTotalCurrentUsers(result.data.length); // Assuming each ride is a unique user for simplicity
-      } catch (error) {
-        console.error("Error loading current rides:", error);
-      }
-    };
+  // Updated API call to load rides instead of users
+  const loadCurrentRides = async () => {
+    try {
+      const result = await axios.get(
+        "https://backend-host-9thd.onrender.com/api/v1/ride/onRide"
+      );
+      setCurrentRides(result.data);
+      setTotalCurrentUsers(result.data.length); // Assuming each ride is a unique user for simplicity
+    } catch (error) {
+      console.error("Error loading current rides:", error);
+    }
+  };
 
   const TotalNewUsersfun = async () => {
     try {
@@ -277,7 +279,9 @@ function Home() {
 
   const AllRidebikes = async () => {
     try {
-      const result = await axios.get("https://backend-host-9thd.onrender.com/api/v1/ride/total");
+      const result = await axios.get(
+        "https://backend-host-9thd.onrender.com/api/v1/ride/total"
+      );
       setAllRides(result.data);
     } catch (error) {
       console.error("Error loading all ride bikes:", error);
@@ -339,24 +343,24 @@ function Home() {
 
   return (
     <div>
-      <div style={{ width: "100%" }} className="column">
+      <div className="column">
         <div className="Dashboard">
           <div className="dashboardRow">
             <span>Dashboard </span>
             <span>{">"}</span>
             <span> Home </span>
-            <Link
-              to=""
-              className="Location"
-              style={{
-                color: bellClicked ? "black" : "grey",
-                marginLeft: "75%",
-              }}
-              onClick={handleClickBell}
-            >
-              <FontAwesomeIcon icon={faBell} />
-            </Link>
           </div>
+          <Link
+            to=""
+            className="Location"
+            style={{
+              color: bellClicked ? "black" : "grey",
+              paddingRight: "10px",
+            }}
+            onClick={handleClickBell}
+          >
+            <FontAwesomeIcon icon={faBell} />
+          </Link>
         </div>
 
         <div style={{ display: "flex" }}>

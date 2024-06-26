@@ -76,6 +76,12 @@
   .circle_logo_profile {
     margin-left: 30px;
   }
+  .column {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    background-color: #effaff;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -348,10 +354,6 @@
 }
 .home_button_spaceC {
   text-decoration: none; /* Remove underline */
-}
-
-.column {
-  background-color: #effaff;
 }
 
 .profile_name {

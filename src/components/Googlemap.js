@@ -30,25 +30,21 @@ const MapContainer = (props) => {
   // };
 
   return (
-    <div>
+    <div style={{ width: "100%", height: "100%" }}>
       <Map
         google={props.google}
-        style={{ width: "80.7%", height: "630px" }}
         zoom={15}
         initialCenter={{
-          lat: 6.034840,
+          lat: 6.03484,
           lng: 80.220073,
         }}
+        style={{ width: "76.5%", height: "80%" }}
       >
-       
+        <Marker position={{ lat: 6.0367, lng: 80.217 }} />
+        <Marker position={{ lat: 6.035, lng: 80.226 }} />
+        <Marker position={{ lat: 6.0298, lng: 80.2174 }} />
+        <Marker position={{ lat: 6.0362, lng: 80.2156 }} />
 
-       
-        <Marker position={{ lat:  6.0367, lng: 80.217 }} />
-        <Marker position={{ lat:  6.035, lng: 80.226 }} />
-        <Marker position={{ lat:  6.0298, lng: 80.2174 }} />
-        <Marker position={{ lat:  6.0362, lng: 80.2156 }} />
-
-        
         {ridePaths.map((path, index) => (
           <Marker
             key={index}
