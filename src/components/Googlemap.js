@@ -36,21 +36,19 @@ const MapContainer = (props) => {
         style={{ width: "80.7%", height: "630px" }}
         zoom={15}
         initialCenter={{
-          lat: 6.04717,
-          lng: 80.210091,
+          lat: 6.034840,
+          lng: 80.220073,
         }}
       >
-        {/* Marker for the first point */}
-        {/* <Marker position={{ lat: 6.053519, lng: 80.220978 }} /> */}
+       
 
-        {/* Marker for the second point */}
-        {/* <Marker position={{ lat: 6.034010, lng: 80.218852 }} /> */}
+       
+        <Marker position={{ lat:  6.0367, lng: 80.217 }} />
+        <Marker position={{ lat:  6.035, lng: 80.226 }} />
+        <Marker position={{ lat:  6.0298, lng: 80.2174 }} />
+        <Marker position={{ lat:  6.0362, lng: 80.2156 }} />
 
-        {/* Marker for the second point */}
-        {/* <Marker position={{ lat: 6.043047, lng: 80.197158 }} /> */}
-
-        {/* Marker for the second point */}
-        {/* <Marker position={{ lat: 6.049653, lng: 80.203943 }} /> */}
+        
         {ridePaths.map((path, index) => (
           <Marker
             key={index}

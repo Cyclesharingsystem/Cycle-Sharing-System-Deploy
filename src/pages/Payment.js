@@ -162,15 +162,22 @@ function Payment() {
               <table className="bike-table">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Estimated Amount</th>
-                    <th scope="col">Daily Cost Amount</th>
-                    <th scope="col" style={{ width: "20%" }}>
+                    <th className="paymet-table-header bg-blue">ID</th>
+                    <th className="paymet-table-header bg-blue">
+                      Estimated Amount
+                    </th>
+                    <th className="bike-table-header bg-blue">
+                      Daily Cost Amount
+                    </th>
+                    <th
+                      className="bike-table-header bg-blue"
+                      style={{ width: "20%" }}
+                    >
                       Date
                     </th>
                   </tr>
                 </thead>
-                <tbody className="table-group-divider">
+                <tbody className="paymet-table-body">
                   {payments
                     .filter(
                       (payment) =>
@@ -179,11 +186,18 @@ function Payment() {
                         payment.paymentDate.includes(search)
                     )
                     .map((payment) => (
-                      <tr key={payment.id}>
-                        <td>{payment.id}</td>
-                        <td>{payment.estimatedAmount}</td>
-                        <td>{payment.estimatedAmount / 2}</td> {/* Display half of the estimated amount */}
-                        <td>{payment.paymentDate}</td>
+                      <tr key={payment.id} className="paymet-table-row">
+                        <td className="paymet-table-cell">{payment.id}</td>
+                        <td className="paymet-table-cell">
+                          {payment.estimatedAmount}
+                        </td>
+                        <td className="paymet-table-cell">
+                          {payment.estimatedAmount / 2}
+                        </td>{" "}
+                        {/* Display half of the estimated amount */}
+                        <td className="paymet-table-cell">
+                          {payment.paymentDate}
+                        </td>
                       </tr>
                     ))}
                 </tbody>

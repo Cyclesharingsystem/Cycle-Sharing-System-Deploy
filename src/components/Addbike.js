@@ -74,7 +74,7 @@ function Addbike() {
         },
         initStationId: addbike.initStationId,
       };
-      console.log(requestData);
+      console.log("requestData",requestData);
       await axios.post("https://backend-host-9thd.onrender.com/api/v1/Bikes", requestData);
 
       // window.location.href = '/bike';
