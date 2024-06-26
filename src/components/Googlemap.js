@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Map, GoogleApiWrapper, Marker } from '@peacechen/google-maps-react';
+import { Map, GoogleApiWrapper, Marker } from "@peacechen/google-maps-react";
 import axios from "axios";
 
 const MapContainer = (props) => {
@@ -8,7 +8,9 @@ const MapContainer = (props) => {
   // Function to fetch active ride paths from the backend
   const fetchActiveRidePaths = async () => {
     try {
-      const response = await axios.get("http://localhost:8095/api/v1/ride/activeRidePaths");
+      const response = await axios.get(
+        "https://backend-host-9thd.onrender.com/api/v1/ride/activeRidePaths"
+      );
       setRidePaths(response.data);
     } catch (error) {
       console.error("Error fetching active ride paths:", error);
@@ -22,9 +24,9 @@ const MapContainer = (props) => {
 
   // const cycleIcon = {
   //   url: "https://img.pngwing.com/pngs/582/77/png-transparent-bicycle-icons-pedaler-cyclist-cycling-cycling-sport-sports-equipment-thumbnail.png", // Replace with your icon URL
-  //   scaledSize: new window.google.maps.Size(30, 30), 
-  //   origin: new window.google.maps.Point(0, 0), 
-  //   anchor: new window.google.maps.Point(15, 30) 
+  //   scaledSize: new window.google.maps.Size(30, 30),
+  //   origin: new window.google.maps.Point(0, 0),
+  //   anchor: new window.google.maps.Point(15, 30)
   // };
 
   return (
@@ -34,7 +36,7 @@ const MapContainer = (props) => {
         style={{ width: "80.7%", height: "630px" }}
         zoom={15}
         initialCenter={{
-          lat: 6.047170,
+          lat: 6.04717,
           lng: 80.210091,
         }}
       >
@@ -54,7 +56,7 @@ const MapContainer = (props) => {
             key={index}
             position={{ lat: path.latitude, lng: path.longitude }}
             title={`Ride ID: ${path.rideId}, Timestamp: ${path.timestamp}`}
-           // icon={cycleIcon}
+            // icon={cycleIcon}
           />
         ))}
       </Map>
