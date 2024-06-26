@@ -1,14 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Payment.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBicycle, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { Bar, Line } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
-import revenueData from "../data/revenueData.json";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Line } from "react-chartjs-2";
+import axios from "axios";
 
 function Payment() {
   const [search, setSearch] = useState("");
-  const [payment, setPayment] = useState([]);
+  const [payments, setPayments] = useState([]); // State to hold user payments
+  const [revenueData, setRevenueData] = useState([]); // State to hold monthly revenue data
+
+  useEffect(() => {
+    fetchMonthlyRevenueData();
+    fetchUserPayments();
+  }, []);
+
+  const fetchMonthlyRevenueData = async () => {
+    try {
+      const currentYear = new Date().getFullYear();
+      const months = Array.from({ length: 12 }, (_, i) => i + 1);
+
+      const promises = months.map((month) =>
+        axios.get(
+          `http://localhost:8095/api/v1/userpayment/monthlySum?year=${currentYear}&month=${month}`
+        )
+      );
+
+      const responses = await Promise.all(promises);
+      const monthlyData = responses.map((response, index) => ({
+        label: new Date(currentYear, index).toLocaleString("en-US", {
+          month: "short",
+        }),
+        revenue: response.data,
+        cost: response.data * 0.5, // assuming cost is 50% of revenue, replace with actual calculation
+      }));
+
+      setRevenueData(monthlyData);
+    } catch (error) {
+      console.error("Error fetching monthly revenue data:", error);
+    }
+  };
+
+  const fetchUserPayments = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8095/api/v1/userpayment/all"
+      );
+      setPayments(response.data);
+    } catch (error) {
+      console.error("Error fetching user payments:", error);
+    }
+  };
 
   return (
     <div>
@@ -27,8 +69,6 @@ function Payment() {
           className="paymentbox1"
           style={{ display: "flex", flexDirection: "row" }}
         >
-          <div></div>
-          <div></div>
           <Line
             data={{
               labels: revenueData.map((data) => data.label),
@@ -51,7 +91,6 @@ function Payment() {
               scales: {
                 x: {
                   type: "category",
-                  labels: revenueData.map((data) => data.label),
                 },
                 y: {
                   beginAtZero: true,
@@ -89,118 +128,33 @@ function Payment() {
             </div>
             <div className="payment_table table-container">
               <table className="bike-table">
-                <thead style={{ width: "15%" }}>
+                <thead>
                   <tr>
-                    <th scope="col">Bike ID</th>
-                    <th scope="col">User ID</th>
-                    <th scope="col" style={{ width: "21%" }}>
-                      Mobile
-                    </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Estimated Amount</th>
+                    <th scope="col">Daily Cost Amount</th>
                     <th scope="col" style={{ width: "20%" }}>
-                      Total payment
-                    </th>
-                    <th scope="col" style={{ width: "21%" }}>
-                      Start date
-                    </th>
-                    <th scope="col">Duration</th>
-                    <th scope="col" style={{ width: "15%" }}>
-                      Action
+                      Date
                     </th>
                   </tr>
                 </thead>
                 <tbody className="table-group-divider">
-                  <tr>
-                    <td>1</td>
-                    <td>12</td>
-                    <td>077 4589564</td>
-                    <td>500</td>
-                    <td>2023-12-12</td>
-                    <td>30 mins</td>
-                    <td>
-                      <div className="dropdown" style={{ textAlign: "center" }}>
-                        <button
-                          className="dropbtn"
-                          style={{ alignItems: "center" }}
-                        >
-                          Action <span className="arrow">&#9658;</span>
-                        </button>
-                        <div className="dropdown-content">
-                          <button
-                            className="action-button"
-                            // onClick={() => handleAction("Edit")}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="action-button"
-                            // onClick={() => handleAction("View")}
-                          >
-                            View
-                          </button>
-                          <button
-                            className="action-button"
-                            // onClick={() => handleAction("View location")}
-                          >
-                            View location
-                          </button>
-                          <button
-                            className="action-button"
-                            // onClick={() => handleAction("Delete")}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>1</td>
-
-                    <td>12</td>
-                    <td>077 4589564</td>
-                    <td>500</td>
-                    <td>2023-12-12</td>
-
-                    <td>30 mins</td>
-
-                    <td>
-                      <div className="dropdown" style={{ textAlign: "center" }}>
-                        <button
-                          className="dropbtn"
-                          style={{ alignItems: "center" }}
-                        >
-                          Action <span className="arrow">&#9658;</span>
-                        </button>
-                        <div className="dropdown-content">
-                          <button
-                            className="action-button"
-                            // onClick={() => handleAction("Edit")}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="action-button"
-                            // onClick={() => handleAction("View")}
-                          >
-                            View
-                          </button>
-                          <button
-                            className="action-button"
-                            // onClick={() => handleAction("View location")}
-                          >
-                            View location
-                          </button>
-                          <button
-                            className="action-button"
-                            // onClick={() => handleAction("Delete")}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+                  {payments
+                    .filter(
+                      (payment) =>
+                        payment.id.toString().includes(search) ||
+                        payment.estimatedAmount.toString().includes(search) ||
+                        payment.paymentDate.includes(search)
+                    )
+                    .map((payment) => (
+                      <tr key={payment.id}>
+                        <td>{payment.id}</td>
+                        <td>{payment.estimatedAmount}</td>
+                        <td>{payment.estimatedAmount / 2}</td>{" "}
+                        {/* Calculating daily cost as half of estimated amount */}
+                        <td>{payment.paymentDate}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>

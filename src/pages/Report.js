@@ -133,7 +133,7 @@ function Report1() {
             >
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <p className="text">Maintenance fees</p>
+                  <p className="text">Total income Today</p>
                   <p
                     className="text"
                     style={{ marginLeft: "100px", fontSize: "14px" }}
@@ -142,7 +142,7 @@ function Report1() {
                   </p>
                 </div>
 
-                <p className="numberuser1">21 000</p>
+                <p className="numberuser1">{totalIncome.toLocaleString()}</p>
               </div>
             </div>
             <div
@@ -151,7 +151,7 @@ function Report1() {
             >
               <div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <p className="text">Total Balance</p>
+                  <p className="text">Total Cost today</p>
                   <p
                     className="text"
                     style={{ marginLeft: "100px", fontSize: "14px" }}
@@ -160,7 +160,7 @@ function Report1() {
                   </p>
                 </div>
 
-                <p className="numberuser1">175 000</p>
+                <p className="numberuser1">{(totalIncome/2).toLocaleString()}</p>
               </div>
             </div>
           </div>
